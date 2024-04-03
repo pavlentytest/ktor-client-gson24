@@ -7,21 +7,23 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.serialization.gson.gson
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+//import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 @Serializable
-data class User(var id: Int, var name: String, val age: Int)
+data class User( var id: Int, var name: String, val age: Int)
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val client = HttpClient(){
+        val client = HttpClient{
             install(ContentNegotiation) {
-                gson()
+                json()
             }
         }
         GlobalScope.launch {
